@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#176b4a">
+  <meta name="description" content="Relatórios fotográficos offline, direto no seu aparelho.">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Relata">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon-192.png">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <title>Relata — Relatórios Fotográficos</title>
+  <style>
+    :root{--green:#176b4a;--green2:#0f5138;--lime:#d7f36b;--ink:#17251f;--muted:#718078;--line:#e2e9e4;--paper:#f5f8f5;--white:#fff;--red:#ff3b30;--shadow:0 10px 28px #193a2610}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}button,input,textarea{font:inherit}button{cursor:pointer;touch-action:manipulation}.app{max-width:780px;margin:0 auto;padding:env(safe-area-inset-top) 18px calc(28px + env(safe-area-inset-bottom))}
+    header{display:flex;align-items:center;justify-content:space-between;padding:15px 2px 21px}.brand{display:flex;align-items:center;gap:10px;font-weight:900;font-size:19px}.mark{height:38px;width:38px;border-radius:12px;background:var(--green);display:grid;place-items:center;color:white;font-size:25px}.brand small{font-weight:500;color:#829087;font-size:14px}.top-note{font-size:11px;color:var(--muted)}.hero{margin-bottom:18px}.eyebrow{font-size:10px;font-weight:900;letter-spacing:1.5px;color:var(--green)}h1{font-size:28px;line-height:1.15;letter-spacing:-.7px;margin:5px 0}.hero p{margin:5px 0;color:var(--muted);font-size:13px;line-height:1.5}
+    .actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.btn{border:1px solid var(--line);border-radius:11px;background:#fff;color:var(--ink);font-weight:800;min-height:46px;padding:10px 12px}.btn.primary{background:var(--green);border-color:var(--green);color:white}.btn.soft{background:#edf4ef}.btn.danger{color:#9b3232}.btn:active{transform:scale(.99);opacity:.85}.status{text-align:right;min-height:23px;padding:5px 2px;font-size:11px;color:var(--muted)}
+    .panel,.photo-card,.empty{background:white;border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow)}.panel{padding:15px;margin:7px 0 17px}.field{margin-bottom:12px}.field:last-child{margin-bottom:0}.field label{display:block;font-size:12px;color:#53645a;font-weight:800;margin-bottom:6px}.field input,.photo-fields input,.photo-fields textarea{width:100%;border:1px solid var(--line);border-radius:9px;padding:12px;background:#fbfcfb;color:var(--ink);outline:none}.field input:focus,.photo-fields input:focus,.photo-fields textarea:focus{border-color:#84aa92;box-shadow:0 0 0 3px #176b4a15}
+    .upload{padding:16px;border:1px dashed #b9c9bf;border-radius:14px;text-align:center;background:#fbfdfb;margin-bottom:19px}.upload strong{display:block;font-size:15px}.upload p{font-size:11px;color:var(--muted);margin:4px 0 13px}.upload-row{display:flex;gap:9px;justify-content:center;flex-wrap:wrap}.upload-row .btn{min-height:42px}.section-head{display:flex;justify-content:space-between;align-items:center;margin:2px 2px 11px}.section-head h2{font-size:17px;margin:0}.pill{border-radius:20px;padding:4px 9px;background:#eaf0eb;color:var(--muted);font-size:11px;font-weight:700}
+    .empty{text-align:center;padding:25px 19px;margin-bottom:14px}.empty-icon{margin:0 auto 10px;width:46px;height:46px;border-radius:15px;background:#e9f4ec;color:var(--green);display:grid;place-items:center;font-size:24px}.empty strong{display:block;font-size:14px}.empty p{max-width:270px;margin:6px auto 0;color:var(--muted);font-size:12px;line-height:1.5}
+    .photo-card{overflow:hidden;margin-bottom:14px}.photo-stage{position:relative;width:fit-content;max-width:100%;margin:0 auto;background:#f3f6f3;overflow:hidden;touch-action:none;user-select:none;cursor:zoom-in}.photo-stage img{display:block;width:auto;height:auto;max-width:100%;max-height:280px;pointer-events:none;object-fit:contain}.photo-stage canvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none}.photo-card.photo-expanded .photo-stage{cursor:zoom-out}.photo-card.photo-expanded .photo-stage img{max-height:min(68dvh,620px)}.tools{display:flex;flex-wrap:wrap;gap:6px;padding:10px 12px;border-bottom:1px solid var(--line)}.tool{border:1px solid var(--line);border-radius:9px;padding:7px 10px;background:white;color:#45564c;font-size:12px;font-weight:700}.tool.active{background:#e7f5eb;border-color:#8db89e;color:var(--green);font-weight:900}.hint{padding:2px 13px 0;color:var(--muted);font-size:11px;line-height:1.45}.photo-fields{padding:12px;display:grid;gap:8px}.photo-fields textarea{min-height:78px;resize:vertical}.photo-foot{padding:0 13px 12px;display:flex;justify-content:space-between;align-items:center;gap:12px}.filename{font-size:11px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.remove{border:0;background:none;color:#a33333;font-size:12px;font-weight:800;padding:8px}
+    .hint-box{display:flex;gap:10px;padding:11px;background:#eff4ef;border-radius:11px;color:var(--muted);font-size:11px;line-height:1.5}.hint-box:before{content:"";width:3px;flex:none;border-radius:5px;background:var(--lime)}footer{text-align:center;font-size:10px;color:#849188;margin:15px 0}.hidden{display:none!important}
+    dialog{border:0;border-radius:18px;box-shadow:0 24px 80px #0003;width:min(560px,calc(100% - 28px));max-height:85dvh;padding:0;color:var(--ink)}dialog::backdrop{background:#12221980}.dialog-head{display:flex;align-items:center;justify-content:space-between;padding:15px 17px;border-bottom:1px solid var(--line)}.dialog-head h2{font-size:20px;margin:0}.dialog-body{padding:14px 16px;overflow:auto;max-height:65dvh}.history-row{border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:9px}.history-row strong{display:block;font-size:14px}.history-row p{font-size:11px;color:var(--muted);margin:4px 0 10px}.history-actions{display:flex;justify-content:flex-end;gap:7px}.history-actions button{min-height:36px;padding:7px 11px}.small{font-size:12px}.toast{position:fixed;bottom:calc(18px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);background:#182a20;color:#fff;padding:11px 15px;border-radius:12px;box-shadow:0 8px 28px #0003;font-size:12px;z-index:10;max-width:calc(100% - 32px)}
+    #installBanner{display:none;margin:0 0 12px;background:#e7f5eb;border:1px solid #b8d4c1;padding:11px 12px;border-radius:12px;align-items:center;justify-content:space-between;gap:10px;font-size:12px;color:#28563e}#installBanner button{border:0;border-radius:8px;background:var(--green);color:#fff;padding:8px 11px;font-weight:800}
+    @media(min-width:600px){.app{padding-left:24px;padding-right:24px}.actions{grid-template-columns:repeat(4,1fr)}h1{font-size:32px}}
+    .print-only{display:none}
+    @page{size:A4 portrait;margin:10mm}
+    @media(max-width:599px){.photo-stage img{max-height:220px}.photo-card.photo-expanded .photo-stage img{max-height:68dvh}}
+    @media print{body{background:white}.app{display:none!important}#printRoot{display:block!important}.print-page{height:277mm;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:auto repeat(2,minmax(0,1fr));align-content:start;gap:4mm;break-after:page;page-break-after:always}.print-page:last-child{break-after:auto;page-break-after:auto}.print-report-head{grid-column:1/-1;display:grid;grid-template-columns:1fr auto;gap:1mm 6mm;align-items:center;border-bottom:1px solid #e2e9e4;padding-bottom:3mm;margin-bottom:1mm}.print-brand{display:flex;align-items:center;gap:2mm}.print-mark{width:7mm;height:7mm;border-radius:2mm;background:#176b4a;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:12pt;font-weight:bold}.print-wordmark{font-size:13pt;font-weight:800;color:#17251f}.print-wordmark small{font-size:8pt;color:#718078;font-weight:400}.print-page-label{color:#176b4a;font-size:7pt;letter-spacing:1px;text-transform:uppercase;font-weight:800;text-align:right}.print-report-head h1{grid-column:1/-1;font-size:17pt;line-height:1.2;margin:1mm 0;overflow-wrap:anywhere}.print-meta{grid-column:1/-1;display:flex;gap:5mm;border-top:1px solid #e2e9e4;padding-top:2mm;margin-top:1mm}.print-meta>div{min-width:0;flex:1}.print-meta small{display:block;color:#718078;font-size:6.5pt;text-transform:uppercase;letter-spacing:.5px}.print-meta strong{display:block;color:#17251f;font-size:8pt;overflow-wrap:anywhere}.print-photo{min-width:0;min-height:0;height:100%;display:flex;flex-direction:column;justify-content:flex-start;gap:1.5mm;border:1px solid #e2e9e4;border-radius:2mm;padding:2mm;break-inside:avoid}.print-stage{position:relative;flex:0 0 80mm;height:80mm;min-height:0;width:100%;margin:0 auto;overflow:hidden;background:#eaf0eb}.print-stage img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}.print-caption{flex:1;min-height:0;font-size:8pt;line-height:1.3;color:#718078;white-space:pre-wrap;overflow-wrap:anywhere}.print-number{display:block;color:#176b4a;font-size:6.5pt;font-weight:800;letter-spacing:.7px;margin-bottom:1mm}.print-caption h3{font-size:9pt;line-height:1.25;color:#17251f;margin:0 0 1mm;overflow-wrap:anywhere}.print-description{font-size:7.5pt;line-height:1.3;color:#53645a;margin:0;white-space:pre-wrap;overflow-wrap:anywhere}.print-footer{grid-column:1/-1;align-self:end;text-align:center;color:#849188;font-size:6.5pt;padding-top:1mm}}
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header><div class="brand"><div class="mark">✓</div><div>Relata <small>/ campo</small></div></div><div class="top-note">Relatórios neste dispositivo</div></header>
+    <div id="installBanner" class="no-print"><span>Instale o Relata na tela inicial para abrir como aplicativo.</span><button id="installBtn">Instalar</button></div>
+    <section class="hero"><div class="eyebrow">RELATÓRIO FOTOGRÁFICO</div><h1>Novo relatório</h1><p>Registre o trabalho, destaque os detalhes e compartilhe com clareza.</p></section>
+    <section class="actions no-print">
+      <button class="btn" id="historyBtn">Histórico</button><button class="btn" id="saveBtn">Salvar</button><button class="btn" id="clearBtn">Limpar</button><button class="btn primary" id="pdfBtn">⇩ Exportar PDF</button>
+    </section>
+    <div class="status" id="status">Salvo automaticamente neste dispositivo</div>
+    <section class="panel no-print">
+      <div class="field"><label for="title">Título do relatório</label><input id="title" placeholder="Relatório de inspeção" autocomplete="off"></div>
+      <div class="field"><label for="client">Cliente / projeto</label><input id="client" placeholder="Nome do cliente ou projeto" autocomplete="organization"></div>
+      <div class="field"><label for="date">Data</label><input id="date" type="date"></div>
+    </section>
+    <section class="upload no-print">
+      <strong>Adicionar fotos</strong><p>Escolha como quer incluir imagens no relatório.</p>
+      <div class="upload-row"><button class="btn primary" id="cameraBtn">▣ Tirar foto</button><button class="btn" id="galleryBtn">▧ Galeria</button></div>
+      <input type="file" accept="image/*" capture="environment" id="cameraInput" class="hidden">
+      <input type="file" accept="image/*" multiple id="galleryInput" class="hidden">
+    </section>
+    <div class="section-head"><h2>Fotos e observações</h2><span class="pill" id="photoCount">0 fotos</span></div>
+    <section id="photos"></section>
+    <section id="empty" class="empty"><div class="empty-icon">▧</div><strong>Suas fotos aparecerão aqui</strong><p>Tire uma foto ou escolha imagens da galeria para começar.</p></section>
+    <div class="hint-box no-print">Dica: escolha “Círculo”, “Seta” ou “Texto” e arraste sobre a foto para destacar um detalhe. No modo Visualizar, toque e arraste as marcações para ajustá-las.</div>
+    <footer>Relata — seus relatórios ficam salvos somente neste dispositivo.</footer>
+  </main>
+  <section id="printRoot" class="print-only" aria-hidden="true"></section>
+  <dialog id="historyDialog"><div class="dialog-head"><h2>Histórico</h2><button class="btn small" id="closeHistory">Fechar</button></div><div class="dialog-body" id="historyList"></div></dialog>
+  <div id="toast" class="toast hidden" role="status"></div>
+  <script>
+  (() => {
+    'use strict';
+    const DB_NAME='relata-pwa-v1', STORE='records', DRAFT='current-draft';
+    const $=id=>document.getElementById(id);
+    const state={title:'Relatório de inspeção',client:'',date:new Date().toISOString().slice(0,10),photos:[]};
+    let db,saveTimer,toastTimer,installPrompt=null;
+    const clamp=(v,a=0,b=1)=>Math.max(a,Math.min(b,v));
+    const id=()=>`${Date.now().toString(36)}-${Math.random().toString(36).slice(2,9)}`;
+    const openDB=()=>new Promise((resolve,reject)=>{const r=indexedDB.open(DB_NAME,1);r.onupgradeneeded=()=>r.result.createObjectStore(STORE);r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error)});
+    const read=(key)=>new Promise((resolve,reject)=>{const r=db.transaction(STORE).objectStore(STORE).get(key);r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error)});
+    const write=(key,value)=>new Promise((resolve,reject)=>{const tx=db.transaction(STORE,'readwrite');tx.objectStore(STORE).put(value,key);tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error)});
+    const del=(key)=>new Promise((resolve,reject)=>{const tx=db.transaction(STORE,'readwrite');tx.objectStore(STORE).delete(key);tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error)});
+    const allRecords=()=>new Promise((resolve,reject)=>{const r=db.transaction(STORE).objectStore(STORE).getAll();r.onsuccess=()=>resolve(r.result||[]);r.onerror=()=>reject(r.error)});
+    function toast(message){$('toast').textContent=message;$('toast').classList.remove('hidden');clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').classList.add('hidden'),2600)}
+    function status(message){$('status').textContent=message}
+    function syncFields(){ $('title').value=state.title;$('client').value=state.client;$('date').value=state.date }
+    function scheduleSave(){status('Salvando…');clearTimeout(saveTimer);saveTimer=setTimeout(async()=>{try{await write(DRAFT,{...state,updatedAt:new Date().toISOString()});status('Salvo automaticamente neste dispositivo')}catch(e){console.error(e);status('Não foi possível salvar. Libere espaço no aparelho.')}},350)}
+    function safeText(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+    function render(){
+      $('photoCount').textContent=`${state.photos.length} ${state.photos.length===1?'foto':'fotos'}`;$('empty').classList.toggle('hidden',state.photos.length>0);
+      const root=$('photos');root.replaceChildren();
+      state.photos.forEach((photo,pi)=>{
+        const card=document.createElement('article');card.className='photo-card';card.dataset.photo=photo.id;
+        const stage=document.createElement('div');stage.className='photo-stage';
+        const img=document.createElement('img');img.src=photo.src;img.alt=photo.name;img.draggable=false;
+        const canvas=document.createElement('canvas');stage.append(img,canvas);card.append(stage);
+        stage.setAttribute('aria-label','Toque para ampliar ou reduzir a foto');
+        stage.addEventListener('click',()=>{if((photo.tool||'select')!=='select')return;card.classList.toggle('photo-expanded');requestAnimationFrame(()=>{fitCanvas(canvas,img);drawPhoto(photo,canvas,img)})});
+        const tools=document.createElement('div');tools.className='tools no-print';
+        const toolItems=[['select','Visualizar'],['circle','◯ Círculo'],['arrow','↗ Seta'],['text','T Texto'],['undo','Desfazer']];
+        toolItems.forEach(([tool,label])=>{const b=document.createElement('button');b.className=`tool${(photo.tool||'select')===tool?' active':''}`;b.textContent=label;b.type='button';b.addEventListener('click',()=>{if(tool==='undo'){photo.marks.pop();photo.selected=-1}else{photo.tool=tool;photo.selected=-1}drawPhoto(photo,canvas,img);renderTools(card,photo);scheduleSave()});tools.append(b)});card.append(tools);
+        const hint=document.createElement('div');hint.className='hint no-print';hint.textContent='Arraste dentro do círculo para mover ou na borda para redimensionar. Na seta, arraste o corpo para mover e a ponta para direcionar.';card.append(hint);
+        const fields=document.createElement('div');fields.className='photo-fields no-print';
+        const caption=document.createElement('input');caption.placeholder='Legenda da foto';caption.value=photo.caption||'';caption.setAttribute('aria-label','Legenda da foto');caption.addEventListener('input',()=>{photo.caption=caption.value;scheduleSave()});
+        const desc=document.createElement('textarea');desc.placeholder='Descreva o que esta foto mostra...';desc.value=photo.description||'';desc.setAttribute('aria-label','Descrição da foto');desc.addEventListener('input',()=>{photo.description=desc.value;scheduleSave()});fields.append(caption,desc);card.append(fields);
+        const foot=document.createElement('div');foot.className='photo-foot no-print';const name=document.createElement('span');name.className='filename';name.textContent=photo.name;const remove=document.createElement('button');remove.className='remove';remove.textContent='Remover foto';remove.type='button';remove.addEventListener('click',()=>{if(confirm('Remover esta foto do relatório?')){state.photos.splice(pi,1);render();scheduleSave()}});foot.append(name,remove);card.append(foot);root.append(card);
+        img.onload=()=>{fitCanvas(canvas,img);drawPhoto(photo,canvas,img)};
+        setupPointer(photo,canvas,img);
+      });
+    }
+    function renderTools(card,photo){card.querySelectorAll('.tool').forEach((b,i)=>b.classList.toggle('active',(['select','circle','arrow','text','undo'][i])===(photo.tool||'select')))}
+    function fitCanvas(canvas,img){const r=img.getBoundingClientRect(),dpr=Math.max(1,window.devicePixelRatio||1);canvas.width=Math.round(r.width*dpr);canvas.height=Math.round(r.height*dpr);canvas.style.width=`${r.width}px`;canvas.style.height=`${r.height}px`;const ctx=canvas.getContext('2d');ctx.setTransform(dpr,0,0,dpr,0,0)}
+    function drawPhoto(photo,canvas,img){if(!canvas.width||!img.naturalWidth)return;const rect=canvas.getBoundingClientRect(),ctx=canvas.getContext('2d'),sx=rect.width/photo.width,sy=rect.height/photo.height;ctx.clearRect(0,0,rect.width,rect.height);ctx.lineWidth=Math.max(3,rect.width/180);ctx.strokeStyle='#ff3b30';ctx.fillStyle='#ff3b30';
+      photo.marks.forEach((m,i)=>{const selected=i===photo.selected;
+        if(m.type==='circle'){ctx.beginPath();ctx.ellipse(m.x*rect.width,m.y*rect.height,m.rx*rect.width,m.ry*rect.height,0,0,Math.PI*2);ctx.stroke();if(selected){handle(ctx,m.x*rect.width,m.y*rect.height,6,'#fff');handle(ctx,(m.x+m.rx)*rect.width,m.y*rect.height,10,'#176b4a')}}
+        else if(m.type==='arrow'){const x1=m.x*rect.width,y1=m.y*rect.height,x2=m.x2*rect.width,y2=m.y2*rect.height,a=Math.atan2(y2-y1,x2-x1),head=Math.min(22,rect.width*.06);ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();ctx.beginPath();ctx.moveTo(x2,y2);ctx.lineTo(x2-head*Math.cos(a-.48),y2-head*Math.sin(a-.48));ctx.lineTo(x2-head*Math.cos(a+.48),y2-head*Math.sin(a+.48));ctx.closePath();ctx.fill();if(selected){handle(ctx,x1,y1,9,'#fff');handle(ctx,x2,y2,10,'#176b4a')}}
+        else{ctx.font=`900 ${Math.max(26,rect.width/14)}px system-ui`;ctx.fillText('!',m.x*rect.width,m.y*rect.height)}
+      });}
+    function handle(ctx,x,y,r,color){ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fillStyle=color;ctx.fill();ctx.lineWidth=2;ctx.strokeStyle='#176b4a';ctx.stroke()}
+    function point(e,canvas){const r=canvas.getBoundingClientRect();return{x:clamp((e.clientX-r.left)/r.width),y:clamp((e.clientY-r.top)/r.height)}}
+    function ellipseHit(m,p,w,h){const dx=(p.x-m.x)*w,dy=(p.y-m.y)*h,rx=Math.max(m.rx*w,1),ry=Math.max(m.ry*h,1),n=(dx/rx)**2+(dy/ry)**2;const angle=Math.atan2(dy,dx),boundary=1/Math.sqrt((Math.cos(angle)/rx)**2+(Math.sin(angle)/ry)**2);return{inside:n<=1,edge:Math.abs(Math.hypot(dx,dy)-boundary)<=22,center:Math.hypot(dx,dy)<Math.min(rx,ry)*.5}}
+    function distSeg(p,a,b,w,h){const px=p.x*w,py=p.y*h,ax=a.x*w,ay=a.y*h,bx=b.x*w,by=b.y*h,dx=bx-ax,dy=by-ay,t=clamp(((px-ax)*dx+(py-ay)*dy)/(dx*dx+dy*dy||1));return Math.hypot(px-(ax+t*dx),py-(ay+t*dy))}
+    function setupPointer(photo,canvas,img){let gesture=null;canvas.onpointerdown=e=>{const p=point(e,canvas),r=canvas.getBoundingClientRect(),w=r.width,h=r.height;photo.tool=photo.tool||'select';if(photo.tool==='select'){
+        for(let i=photo.marks.length-1;i>=0;i--){const m=photo.marks[i];if(m.type==='circle'){const hit=ellipseHit(m,p,w,h);if(hit.inside||hit.edge){photo.selected=i;gesture={i,mode:hit.edge&&!hit.center?'radius':'move',start:p,mark:{...m}};break}}
+          if(m.type==='arrow'){const d=(a,b)=>Math.hypot((a.x-b.x)*w,(a.y-b.y)*h);if(d(p,{x:m.x2,y:m.y2})<28){photo.selected=i;gesture={i,mode:'target',start:p,mark:{...m}};break}if(d(p,{x:m.x,y:m.y})<28){photo.selected=i;gesture={i,mode:'origin',start:p,mark:{...m}};break}if(distSeg(p,{x:m.x,y:m.y},{x:m.x2,y:m.y2},w,h)<22){photo.selected=i;gesture={i,mode:'move',start:p,mark:{...m}};break}}
+        }
+      }else{gesture={mode:'draw',start:p,tool:photo.tool}}
+      if(gesture){canvas.setPointerCapture(e.pointerId);drawPhoto(photo,canvas,img);e.preventDefault()}};
+      canvas.onpointermove=e=>{if(!gesture)return;const p=point(e,canvas),g=gesture;if(g.mode==='draw')return;let m={...g.mark},dx=p.x-g.start.x,dy=p.y-g.start.y;
+        if(g.mode==='move'&&m.type==='circle'){m.x=clamp(g.mark.x+dx);m.y=clamp(g.mark.y+dy)}
+        if(g.mode==='move'&&m.type==='arrow'){const minX=-Math.min(g.mark.x,g.mark.x2),maxX=1-Math.max(g.mark.x,g.mark.x2),minY=-Math.min(g.mark.y,g.mark.y2),maxY=1-Math.max(g.mark.y,g.mark.y2),sx=clamp(dx,minX,maxX),sy=clamp(dy,minY,maxY);m.x+=sx;m.x2+=sx;m.y+=sy;m.y2+=sy}
+        if(g.mode==='radius'&&m.type==='circle'){const startD=Math.hypot((g.start.x-m.x)*canvas.clientWidth,(g.start.y-m.y)*canvas.clientHeight),nowD=Math.hypot((p.x-m.x)*canvas.clientWidth,(p.y-m.y)*canvas.clientHeight),scale=Math.max(.08,nowD/Math.max(startD,1));m.rx=clamp(g.mark.rx*scale,.02,1);m.ry=clamp(g.mark.ry*scale,.02,1)}
+        if(g.mode==='target'&&m.type==='arrow'){m.x2=p.x;m.y2=p.y}if(g.mode==='origin'&&m.type==='arrow'){m.x=p.x;m.y=p.y}photo.marks[g.i]=m;drawPhoto(photo,canvas,img);e.preventDefault()};
+      canvas.onpointerup=e=>{if(!gesture)return;const g=gesture,p=point(e,canvas);if(g.mode==='draw'){const start=g.start,dx=(p.x-start.x)*photo.width,dy=(p.y-start.y)*photo.height;if(g.tool==='circle'){const radius=Math.max(24,Math.hypot(dx,dy));photo.marks.push({type:'circle',x:start.x,y:start.y,rx:radius/photo.width,ry:Math.max(20,radius*.7)/photo.height})}else if(g.tool==='arrow'){photo.marks.push({type:'arrow',x:start.x,y:start.y,x2:p.x,y2:p.y})}else if(g.tool==='text'){photo.marks.push({type:'text',x:p.x,y:p.y})}}
+        photo.selected=photo.marks.length-1;gesture=null;drawPhoto(photo,canvas,img);scheduleSave();e.preventDefault()};
+      canvas.onpointercancel=()=>{gesture=null};
+    }
+    async function compressFile(file){const url=URL.createObjectURL(file);try{const im=new Image();im.src=url;await im.decode();const scale=Math.min(1,1280/Math.max(im.naturalWidth,im.naturalHeight)),w=Math.round(im.naturalWidth*scale),h=Math.round(im.naturalHeight*scale),c=document.createElement('canvas');c.width=w;c.height=h;c.getContext('2d').drawImage(im,0,0,w,h);return{src:c.toDataURL('image/jpeg',.72),width:w,height:h}}finally{URL.revokeObjectURL(url)}}
+    async function addFiles(files){if(!files.length)return;status('Preparando fotos…');const added=[];for(const file of files){if(!file.type.startsWith('image/'))continue;try{const compressed=await compressFile(file);added.push({id:id(),name:file.name||'foto.jpg',...compressed,caption:'',description:'',marks:[],tool:'select',selected:-1})}catch(e){console.error(e);toast(`Não foi possível abrir ${file.name}`)}}state.photos.unshift(...added);render();scheduleSave();status('Fotos adicionadas')}
+    $('title').addEventListener('input',e=>{state.title=e.target.value;scheduleSave()});$('client').addEventListener('input',e=>{state.client=e.target.value;scheduleSave()});$('date').addEventListener('input',e=>{state.date=e.target.value;scheduleSave()});
+    $('cameraBtn').onclick=()=>$('cameraInput').click();$('galleryBtn').onclick=()=>$('galleryInput').click();$('cameraInput').onchange=e=>{void addFiles([...e.target.files]);e.target.value=''};$('galleryInput').onchange=e=>{void addFiles([...e.target.files]);e.target.value=''};
+    $('clearBtn').onclick=async()=>{if(state.photos.length&&!confirm('Remover todas as fotos e reiniciar o relatório?'))return;Object.assign(state,{title:'Relatório de inspeção',client:'',date:new Date().toISOString().slice(0,10),photos:[]});syncFields();render();scheduleSave();toast('Relatório reiniciado')};
+    $('saveBtn').onclick=async()=>{if(!state.photos.length){toast('Inclua pelo menos uma foto antes de salvar.');return}try{const record={...structuredClone(state),id:id(),updatedAt:new Date().toISOString()};await write(`report:${record.id}`,record);toast('Relatório salvo neste dispositivo')}catch(e){console.error(e);toast('Não foi possível salvar o relatório.')}};
+    async function preparePrint(){
+      const root=$('printRoot');root.replaceChildren();
+      const pagesTotal=Math.ceil(state.photos.length/4);
+      for(let offset=0;offset<state.photos.length;offset+=4){
+        const page=document.createElement('section');page.className='print-page';
+        const head=document.createElement('div');head.className='print-report-head';
+        const brand=document.createElement('div');brand.className='print-brand';
+        const mark=document.createElement('span');mark.className='print-mark';mark.textContent='✓';
+        const wordmark=document.createElement('span');wordmark.className='print-wordmark';wordmark.append(document.createTextNode('Relata '));
+        const subbrand=document.createElement('small');subbrand.textContent='/ campo';wordmark.append(subbrand);brand.append(mark,wordmark);
+        const pageLabel=document.createElement('div');pageLabel.className='print-page-label';pageLabel.textContent=`Relatório fotográfico · página ${Math.floor(offset/4)+1} de ${pagesTotal}`;
+        const title=document.createElement('h1');title.textContent=state.title||'Relatório de inspeção';
+        const meta=document.createElement('div');meta.className='print-meta';
+        for(const [label,value] of [['Cliente / projeto',state.client||'—'],['Data do relatório',state.date?new Date(`${state.date}T00:00:00`).toLocaleDateString('pt-BR'):'—'],['Fotos',String(state.photos.length)]]){
+          const item=document.createElement('div'),small=document.createElement('small'),strong=document.createElement('strong');small.textContent=label;strong.textContent=value;item.append(small,strong);meta.append(item);
+        }
+        head.append(brand,pageLabel,title,meta);page.append(head);
+        for(const photo of state.photos.slice(offset,offset+4)){
+          const card=document.querySelector(`[data-photo="${CSS.escape(photo.id)}"]`),canvas=card?.querySelector('canvas'),img=card?.querySelector('.photo-stage img');
+          if(canvas&&img&&img.complete){fitCanvas(canvas,img);drawPhoto(photo,canvas,img)}
+          const box=document.createElement('article');box.className='print-photo';
+          const stage=document.createElement('div');stage.className='print-stage';
+          const base=document.createElement('img');base.src=photo.src;base.alt=photo.name;
+          const ink=document.createElement('img');ink.src=canvas?canvas.toDataURL('image/png'):'';ink.alt='';
+          stage.append(base,ink);box.append(stage);
+          const caption=document.createElement('div');caption.className='print-caption';
+          const number=document.createElement('span');number.className='print-number';number.textContent=`FOTO ${String(offset+page.querySelectorAll('.print-photo').length+1).padStart(2,'0')}`;caption.append(number);
+          if(photo.caption){const c=document.createElement('h3');c.textContent=photo.caption;caption.append(c)}
+          if(photo.description){const d=document.createElement('p');d.className='print-description';d.textContent=photo.description;caption.append(d)}
+          box.append(caption);page.append(box);
+        }
+        const footer=document.createElement('footer');footer.className='print-footer';footer.textContent='Relata — relatório gerado neste dispositivo.';page.append(footer);
+        root.append(page);
+      }
+      await Promise.all([...root.querySelectorAll('img')].map(img=>img.decode().catch(()=>{})));
+    }
+    $('pdfBtn').onclick=async()=>{if(!state.photos.length){toast('Inclua pelo menos uma foto para gerar o PDF.');return}document.title=`${(state.title||'Relatório').trim()} - ${(state.client||'').trim()}`.replace(/[\\/:*?"<>|]/g,' ').replace(/\s+/g,' ').trim();try{await preparePrint();window.print()}catch(e){console.error(e);toast('Não foi possível preparar o PDF.')}};
+    window.addEventListener('afterprint',()=>$('printRoot').replaceChildren());
+    $('historyBtn').onclick=()=>void showHistory();$('closeHistory').onclick=()=>$('historyDialog').close();
+    async function showHistory(){const list=$('historyList');list.replaceChildren();const records=(await allRecords()).filter(r=>r&&r.id).sort((a,b)=>String(b.updatedAt).localeCompare(String(a.updatedAt)));if(!records.length){const p=document.createElement('p');p.textContent='Ainda não há relatórios salvos neste aparelho.';list.append(p)}records.forEach(r=>{const row=document.createElement('div');row.className='history-row';const title=document.createElement('strong');title.textContent=r.title||'Relatório sem título';const meta=document.createElement('p');meta.textContent=[r.client,new Date(r.updatedAt).toLocaleDateString('pt-BR'),`${r.photos?.length||0} fotos`].filter(Boolean).join(' · ');const actions=document.createElement('div');actions.className='history-actions';const open=document.createElement('button');open.className='btn small';open.textContent='Abrir';open.onclick=()=>{Object.assign(state,{title:r.title,client:r.client,date:r.date,photos:r.photos||[]});syncFields();render();scheduleSave();$('historyDialog').close();window.scrollTo({top:0,behavior:'smooth'})};const remove=document.createElement('button');remove.className='btn danger small';remove.textContent='Excluir';remove.onclick=async()=>{if(confirm(`Excluir “${r.title||'Relatório sem título'}” do histórico?`)){await del(`report:${r.id}`);void showHistory()}};actions.append(open,remove);row.append(title,meta,actions);list.append(row)});$('historyDialog').showModal()}
+    window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();installPrompt=e;$('installBanner').style.display='flex'});$('installBtn').onclick=async()=>{if(!installPrompt){toast('No Chrome: menu ⋮ → Instalar app ou Adicionar à tela inicial.');return}installPrompt.prompt();await installPrompt.userChoice;installPrompt=null;$('installBanner').style.display='none'};window.addEventListener('appinstalled',()=>toast('Relata instalado na tela inicial.'));
+    window.addEventListener('resize',()=>document.querySelectorAll('.photo-card').forEach(card=>{const photo=state.photos.find(p=>p.id===card.dataset.photo),img=card.querySelector('img'),canvas=card.querySelector('canvas');if(photo&&img&&canvas&&img.complete){fitCanvas(canvas,img);drawPhoto(photo,canvas,img)}}));
+    async function boot(){try{db=await openDB();const draft=await read(DRAFT);if(draft)Object.assign(state,draft);syncFields();render();status('Salvo automaticamente neste dispositivo');if('serviceWorker'in navigator&&location.protocol!=='file:')navigator.serviceWorker.register('./sw.js').catch(e=>console.warn('Service Worker indisponível',e))}catch(e){console.error(e);syncFields();render();status('Armazenamento local indisponível; confira as permissões do navegador.')}}
+    void boot();
+  })();
+  </script>
+</body>
+</html>
